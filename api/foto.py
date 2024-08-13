@@ -1,6 +1,6 @@
 class Foto:
     """
-    Classe de declaração da imagem
+    Classe para representação e declaração das fotos
     """
     name: str
     data: str

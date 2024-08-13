@@ -1,9 +1,6 @@
-import os.path
-
-from flask import Flask, make_response, jsonify, request, redirect,  flash
+from flask import Flask, make_response, jsonify, request
 from database import PyMongo
 from foto import Foto
-from PIL import Image
 
 app = Flask(__name__)
 bd = PyMongo()
@@ -44,21 +41,6 @@ def insert_image():
     return make_response(
         jsonify(bd.insert_image(foto))
     )
-
-@app.route('/save_image', methods=['POST'])
-def save_image():
-    """
-    Insere imagem no banco de dados
-    :return: status_insert
-    """
-    if 'file' not in request.files:
-       flash('No file part')
-       return redirect(request.url)
-    file = request.files['file']
-    file.save('imagem/')
-    # return make_response(
-    #     jsonify(bd.save_images(file))
-    # )
 
 
 if __name__ == '__main__':

@@ -1,9 +1,8 @@
 import json
 from bson.json_util import dumps
-
-from PIL import Image
 import requests
 import base64
+
 URL = 'http://127.0.0.1:5000'
 
 class APIClientTest:

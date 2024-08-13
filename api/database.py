@@ -2,6 +2,7 @@ import json
 import pymongo
 from bson.objectid import ObjectId
 from bson.json_util import dumps
+from foto import Foto
 
 cluster = pymongo.MongoClient(
     "mongodb+srv://db_user:9L9JWU5oWBVxK3LU@cluster0.dnxkd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
@@ -63,21 +64,6 @@ class PyMongo:
             error = json.loads(dumps({'status': 'Erro: Imagem ' + foto.name + ' não foi salva.'}))
             return error
 
-    def save_image(self, file):
-        """
-        Retorna lista de todas as imagens salvas
-        :return:
-        """
-        msg: str
-        try:
-            file.save("imagem/")
-            # collection.insert_one(dt)
-            msg = json.loads(dumps({'status': 'Imagem salva com sucesso!'}))
-            return msg
-        except Exception as e:
-            error = json.loads(dumps({'status': 'Erro: Imagem não foi salva.'}))
-            return error
-
 
 if __name__ == '__main__':
     bd = PyMongo()
@@ -87,7 +73,7 @@ if __name__ == '__main__':
     resp = bd.get_images()
 
     # Teste insert
-    i = Image()
+    i = Foto()
     i.name = 'teste3'
     i.data = 'KHKIDHW*&¨#@BKJHD*&E'
     # resp = bd.insert_image(i)

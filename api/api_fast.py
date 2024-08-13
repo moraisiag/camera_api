@@ -7,6 +7,13 @@ from pydantic import BaseModel
 app = FastAPI()
 bd = PyMongo()
 
+"""
+#######################################################
+OBS:
+Tive dificuldades de prossegiur com a FastAPI, então 
+mudei para a Flask a qual consegui evoluir melhor
+#######################################################
+"""
 
 @app.get("/images")
 async def get_images():
