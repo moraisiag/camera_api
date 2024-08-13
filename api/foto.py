@@ -1,4 +1,4 @@
-class Image:
+class Foto:
     """
     Classe de declaração da imagem
     """

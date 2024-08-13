@@ -2,7 +2,6 @@ import json
 import pymongo
 from bson.objectid import ObjectId
 from bson.json_util import dumps
-from image import Image
 
 cluster = pymongo.MongoClient(
     "mongodb+srv://db_user:9L9JWU5oWBVxK3LU@cluster0.dnxkd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
@@ -46,7 +45,7 @@ class PyMongo:
             error = json.loads(dumps({'status': 'Erro: Problema ao acessar as imagens.'}))
             return error
 
-    def insert_image(self, image):
+    def insert_image(self, foto):
         """
         Retorna lista de todas as imagens salvas
         :return:
@@ -54,14 +53,29 @@ class PyMongo:
         msg: str
         try:
             dt = {
-                'name': image.name,
-                'data': image.data
+                'name': foto.name,
+                'data': foto.data
             }
             collection.insert_one(dt)
-            msg = json.loads(dumps({'status': 'Imagem ' + image.name + ' salva com sucesso!'}))
+            msg = json.loads(dumps({'status': 'Imagem ' + foto.name + ' salva com sucesso!'}))
             return msg
         except Exception as e:
-            error = json.loads(dumps({'status': 'Erro: Imagem ' + image.name + ' não foi salva.'}))
+            error = json.loads(dumps({'status': 'Erro: Imagem ' + foto.name + ' não foi salva.'}))
+            return error
+
+    def save_image(self, file):
+        """
+        Retorna lista de todas as imagens salvas
+        :return:
+        """
+        msg: str
+        try:
+            file.save("imagem/")
+            # collection.insert_one(dt)
+            msg = json.loads(dumps({'status': 'Imagem salva com sucesso!'}))
+            return msg
+        except Exception as e:
+            error = json.loads(dumps({'status': 'Erro: Imagem não foi salva.'}))
             return error
 
 
