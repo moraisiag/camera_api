@@ -12,7 +12,7 @@ collection = db.get_collection('image')
 
 class PyMongo:
     """
-    Classe responsável por executar a comunicação com banco de dados MongoDB
+    Classe responsável por executar a comunicação e iterações com banco de dados MongoDB
     """
 
     def __init__(self):
@@ -29,7 +29,8 @@ class PyMongo:
             json_data = json.loads(dumps(resp))
             return json_data
         except Exception as e:
-            return print("{Erro: " + str(e) + "}")
+            error = json.loads(dumps({'status': 'Erro: Problema ao acessar a imagem '+str(id)}))
+            return error
 
     def get_images(self):
         """
@@ -42,7 +43,8 @@ class PyMongo:
             json_data = json.loads(dumps(list_resp))
             return json_data
         except Exception as e:
-            return print("{Erro: " + str(e) + "}")
+            error = json.loads(dumps({'status': 'Erro: Problema ao acessar as imagens.'}))
+            return error
 
     def insert_image(self, image):
         """
@@ -57,21 +59,23 @@ class PyMongo:
             }
             collection.insert_one(dt)
             msg = json.loads(dumps({'status': 'Imagem ' + image.name + ' salva com sucesso!'}))
-        except Exception as e:
-            msg = json.loads(dumps({'status': 'Erro: Imagem ' + image.name + ' não foi salva.'}))
-        finally:
             return msg
+        except Exception as e:
+            error = json.loads(dumps({'status': 'Erro: Imagem ' + image.name + ' não foi salva.'}))
+            return error
 
 
 if __name__ == '__main__':
     bd = PyMongo()
-    #resp = bd.get_image_by_id("66bac80f607c263326f8a5d4")
+
+    # Teste de consultas
+    # resp = bd.get_image_by_id("66bac80f607c263326f8a5d4")
     resp = bd.get_images()
 
     # Teste insert
     i = Image()
     i.name = 'teste3'
     i.data = 'KHKIDHW*&¨#@BKJHD*&E'
-    resp = bd.insert_image(i)
+    # resp = bd.insert_image(i)
     print(resp)
     print(type(resp))
